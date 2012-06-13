@@ -1,0 +1,5 @@
+it:
+  add_ship_address: Aggiungi indirizzo di consegna
+  add_bill_address: Aggiungi indirizzo di fatturazione
+  remember_ship_address: Salva l'indirizzo di consegna
+  remember_bill_address: Salva l'indirizzo di fatturazione
