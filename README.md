@@ -9,7 +9,7 @@ During the checkout will be offered automatically addresses previously set.
 Installation
 =======
 
-gem 'spree_address_book', :git => 'git://github.com/rdegan/spree_address_book.git'
+gem 'spree_address_book', :git => 'git://github.com/rdegan/spree_address_book.git', :branch => '0.70-stable'
 
 rails generate spree_address_book:install
 
