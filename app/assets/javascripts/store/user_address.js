@@ -40,57 +40,58 @@ var add_ship_address = 'Aggiungi indirizzo di consegna';
 
 
         // need for populate state select
-        if ($('#user_new').is('*') || $('.edit_user').is('*')) {
+        if ($('#user_new').is('*') || $('.edit_user').is('*') || $('.edit_spree_user').is('*')) {
 
 
-            var get_states = function (region) {
-                country = $('p#' + region + 'country' + ' span#' + region + 'country :only-child').val();
-                return state_mapper[country];
-            }
+         
+	        var get_states = function (region) {
+	            country = $('div#' + region + 'country' + ' span#' + region + 'country :only-child').val();
+	            return state_mapper[country];
+	        }
 
-            var update_state = function (region) {
-                states = get_states(region);
+	        var update_state = function (region) {
+	            states = get_states(region);
 
-                state_select = $('p#' + region + 'state select');
-                state_input = $('p#' + region + 'state input');
+	            state_select = $('div#' + region + 'state select');
+	            state_input = $('div#' + region + 'state input');
 
-                if (states) {
-                    selected = state_select.val();
-                    state_select.html('');
-                    states_with_blank = [
-                        ["", ""]
-                    ].concat(states);
-                    $.each(states_with_blank, function (pos, id_nm) {
-                        var opt = $(document.createElement('option'))
-                            .attr('value', id_nm[0])
-                            .html(id_nm[1]);
-                        if (selected == id_nm[0]) {
-                            opt.prop("selected", true);
-                        }
-                        state_select.append(opt);
-                    });
-                    state_select.prop("disabled", false).show();
-                    state_input.hide().prop("disabled", true);
+	            if (states) {
+	                selected = state_select.val();
+	                state_select.html('');
+	                states_with_blank = [
+	                    ["", "Seleziona stato"]
+	                ].concat(states);
+	                $.each(states_with_blank, function (pos, id_nm) {
+	                    var opt = $(document.createElement('option'))
+	                        .attr('value', id_nm[0])
+	                        .html(id_nm[1]);
+	                    if (selected == id_nm[0]) {
+	                        opt.prop("selected", true);
+	                    }
+	                    state_select.append(opt);
+	                });
+	                state_select.prop("disabled", false).show();
+	                state_input.hide().prop("disabled", true);
 
-                } else {
-                    state_input.prop("disabled", false).show();
-                    state_select.hide().prop("disabled", true);
-                }
+	            } else {
+	                state_input.prop("disabled", false).show();
+	                state_select.hide().prop("disabled", true);
+	            }
 
-            };
+	        };
 
-            $('p#bcountry select').change(function () {
-                update_state('b');
-            });
-            $('p#scountry select').change(function () {
-                update_state('s');
-            });
-            update_state('b');
-            update_state('s');
+	        $('div#bcountry select').change(function () {
+	            update_state('b');
+	        });
+	        $('div#scountry select').change(function () {
+	            update_state('s');
+	        });
+	        update_state('b');
+	        update_state('s');
         }
 
         // Visible or hide address if is present
-        if ($('.edit_user').is('*')) {
+        if ($('.edit_user').is('*')|| $('.edit_spree_user').is('*')) {
             if (!is_present('bill')) {
                 $('#billing').toggle();
             } else {

@@ -1,0 +1,187 @@
+<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @user } %>
+
+<% content_for :head do %>
+  <%= javascript_include_tag states_path %>
+<% end %>
+
+
+<div class="grid_12">
+
+  <h2 class="s_title_1"><%= two_color_title t(:editing_user) %></h2>
+
+  <div class="clear"></div>
+
+
+
+  <%= form_for @user, :url => spree.user_path(@user), :method => :put do |form| %>
+<div class="button-create-address">
+    <%= button_tag(t(:add_bill_address), :id => :add_bill_address) %>
+    <%= button_tag(t(:add_ship_address), :id => :add_ship_address) %>
+</div>
+
+<%= hidden_field_tag(:delete_bill_address,  'false') %>
+<%= hidden_field_tag(:delete_ship_address,  'false') %>
+
+    <div class="grid_6 alpha" id="billing" data-hook>
+		<%= form.fields_for :bill_address do |bill_form| %>
+		<h3><%= two_color_title t(:billing_address) %></h3>
+		<div data-hook="billing_inner">
+			<div class="s_row_2 clearfix" id="bfirstname">
+				<%= bill_form.label :firstname, t(:first_name) %>
+				<%= bill_form.text_field :firstname, :class => 'required' %>
+			</div>
+			<div class="s_row_2 clearfix" id="blastname">
+				<%= bill_form.label :lastname, t(:last_name) %>
+				<%= bill_form.text_field :lastname, :class => 'required' %>
+			</div>
+			<% if Spree::Config[:company] %>
+			<div class="s_row_2 clearfix" id="bcompany">
+				<%= bill_form.label :company, t(:company) %>
+				<%= bill_form.text_field :company %>
+			</div>
+			<% end %>
+			<div class="s_row_2 clearfix" id="baddress1">
+				<%= bill_form.label :address1, t(:street_address) %>
+				<%= bill_form.text_field :address1, :class => 'required' %>
+			</div>
+			<div class="s_row_2 clearfix" id="baddress2">
+				<%= bill_form.label :address2, t(:street_address_2) %>
+				<%= bill_form.text_field :address2 %>
+			</div>
+
+			<div class="s_row_2 clearfix" id="bcity">
+				<%= bill_form.label :city, t(:city) %>
+				<%= bill_form.text_field :city, :class => 'required' %>
+			</div>
+
+			<div class="s_row_2 clearfix" id="bcountry">
+				<%= bill_form.label :country_id, t(:country) %>
+				<span id="bcountry">
+					<%= bill_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required', :style => "width:  222px;"} %>
+				</span>
+			</div>
+
+	      <% if Spree::Config[:address_requires_state] %>
+	        <div class="s_row_2 clearfix" id="bstate">
+	          <% have_states = !@user.bill_address.country.states.empty? %>
+	          <%= bill_form.label :state, t(:state) %>
+	            <%#= bill_form.text_field :state_name, :class => 'required' %>
+	          <%= raw state_elements = [
+	             bill_form.collection_select(:state_id, @user.bill_address.country.states,
+	                                :id, :name,
+	                                {:include_blank => true, :prompt => "seleziona uno stato"},
+	                                {:class => have_states ? 'required' : 'hidden',
+	                                :disabled => !have_states, :style => "width:  222px;"}) +
+	             bill_form.text_field(:state_name,
+	                                :class => !have_states ? 'required' : 'hidden',
+	                                :disabled => have_states)
+	             ].join.gsub('"', "'").gsub("\n", "")
+	          %>
+	        </div>
+	      <% end %>
+
+		<div class="s_row_2 clearfix" id="bzipcode">
+			<%= bill_form.label :zipcode, t(:zip) %>
+			<%= bill_form.text_field :zipcode, :class => 'required' %>
+		</div>
+		<div class="s_row_2 clearfix" id="bphone">
+			<%= bill_form.label :phone, t(:phone) %>
+			<%= bill_form.text_field :phone, :class => 'required' %>
+		</div>
+		<% if Spree::Config[:alternative_billing_phone] %>
+		<div class="s_row_2 clearfix" id="baltphone">
+			<%= bill_form.label :alternative_phone, t(:alternative_phone) %>
+			<%= bill_form.text_field :alternative_phone %>
+		</div>
+		<% end %>
+	
+	</div>
+	<% end %>
+	</div>
+
+	<div class="grid_6 alpha" id="shipping" data-hook>
+		<%= form.fields_for :ship_address do |ship_form| %>
+		<h3><%= two_color_title t(:shipping_address) %></h3>
+		<div data-hook="shipping_inner" class="shipping_inner">
+			<div class="s_row_2 clearfix" id="sfirstname">
+				<%= ship_form.label :firstname, t(:first_name) %>
+				<%= ship_form.text_field :firstname, :class => 'required' %>
+			</div>
+			<div class="s_row_2 clearfix" id="slastname">
+				<%= ship_form.label :lastname, t(:last_name) %>
+				<%= ship_form.text_field :lastname, :class => 'required' %>
+			</div>
+			<% if Spree::Config[:company] %>
+			<div class="s_row_2 clearfix" id="scompany">
+				<%= ship_form.label :company, t(:company) %>
+				<%= ship_form.text_field :company %>
+			</div>
+			<% end %>
+			<div class="s_row_2 clearfix" id="saddress1">
+				<%= ship_form.label :address1, t(:street_address) %>
+				<%= ship_form.text_field :address1, :class => 'required' %>
+			</div>
+			<div class="s_row_2 clearfix" id="saddress2">
+				<%= ship_form.label :address2, t(:street_address_2) %>
+				<%= ship_form.text_field :address2 %>
+			</div>
+
+			<div class="s_row_2 clearfix" id="scity">
+				<%= ship_form.label :city, t(:city) %>
+				<%= ship_form.text_field :city, :class => 'required' %>
+			</div>
+
+			<div class="s_row_2 clearfix" id="scountry">
+				<%= ship_form.label :country_id, t(:country) %>
+				<span id="scountry">
+					<%= ship_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required', :style => "width:  222px;"} %>
+				</span>
+			</div>
+
+	      <% if Spree::Config[:address_requires_state] %>
+	        <div class="s_row_2 clearfix" id="sstate">
+	          <% have_states = !@user.ship_address.country.states.empty? %>
+	          <%= ship_form.label :state, t(:state) %>
+	            <%#= ship_form.text_field :state_name, :class => 'required' %>
+	          <%= raw state_elements = [
+	             ship_form.collection_select(:state_id, @user.ship_address.country.states,
+	                                :id, :name,
+	                                {:include_blank => true, :prompt => "seleziona uno stato"},
+	                                {:class => have_states ? 'required' : 'hidden',
+	                                :disabled => !have_states, :style => "width:  222px;"}) +
+	             ship_form.text_field(:state_name,
+	                                :class => !have_states ? 'required' : 'hidden',
+	                                :disabled => have_states)
+	             ].join.gsub('"', "'").gsub("\n", "")
+	          %>
+	        </div>
+	      <% end %>
+
+		<div class="s_row_2 clearfix" id="szipcode">
+			<%= ship_form.label :zipcode, t(:zip) %>
+			<%= ship_form.text_field :zipcode, :class => 'required' %>
+		</div>
+		<div class="s_row_2 clearfix" id="sphone">
+			<%= ship_form.label :phone, t(:phone) %>
+			<%= ship_form.text_field :phone, :class => 'required' %>
+		</div>
+		<% if Spree::Config[:alternative_shipping_phone] %>
+		<div class="s_row_2 clearfix" id="saltphone">
+			<%= ship_form.label :alternative_phone, t(:alternative_phone) %>
+			<%= ship_form.text_field :alternative_phone %>
+		</div>
+		<% end %>
+	</div>
+	<% end %>
+	</div>
+	
+      <p>
+        <button class="s_button_1 s_main_color_bgr" type="submit">
+          <%= content_tag(:span, t(:update), :class => 's_text') %>
+        </button>
+      </p>
+  <% end %>
+
+</div>
+
+

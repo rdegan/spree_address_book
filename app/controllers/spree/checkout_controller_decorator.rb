@@ -1,13 +1,13 @@
-CheckoutController.class_eval do
+Spree::CheckoutController.class_eval do
   after_filter :update_user_address, :only => :update
 
   def before_address
     if current_user
-      @order.bill_address ||= current_user.bill_address || Address.default
-      @order.ship_address ||= current_user.ship_address || Address.default
+      @order.bill_address ||= current_user.bill_address || Spree::Address.default
+      @order.ship_address ||= current_user.ship_address || Spree::Address.default
     else
-      @order.bill_address ||= Address.default
-      @order.ship_address ||= Address.default
+      @order.bill_address ||= Spree::Address.default
+      @order.ship_address ||= Spree::Address.default
     end
   end
 
@@ -22,7 +22,6 @@ CheckoutController.class_eval do
           current_user.ship_address = @order.ship_address.clone
     end
     current_user.save
-
   end
 
 end
