@@ -1,7 +1,7 @@
-var remove_bill_address = 'Rimuovi indirizzo di fatturazione';
-var remove_ship_address = 'Rimuovi indirizzo di consegna';
-var add_bill_address = 'Aggiungi indirizzo di fatturazione';
-var add_ship_address = 'Aggiungi indirizzo di consegna';
+var remove_bill_address = "Remove bill address";// 'Rimuovi indirizzo di fatturazione';
+var remove_ship_address = "Remove ship address"; //'Rimuovi indirizzo di consegna';
+var add_bill_address = "Add bill address"; //'Aggiungi indirizzo di fatturazione';
+var add_ship_address = "Add ship address"; //'Aggiungi indirizzo di consegna';
 
 
 (function ($) {
