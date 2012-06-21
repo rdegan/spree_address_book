@@ -12,6 +12,8 @@ CheckoutController.class_eval do
   end
 
   def update_user_address
+
+    if current_user
     unless params[:remember_bill_address].blank?
       current_user.bill_address.delete unless current_user.bill_address.blank?
       current_user.bill_address = @order.bill_address.clone
@@ -23,6 +25,7 @@ CheckoutController.class_eval do
     end
     current_user.save
 
-  end
+    end
+    end
 
 end
