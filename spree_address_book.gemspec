@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_address_book'
-  s.version     = '0.70.5'
+  s.version     = '0.70.51'
   s.summary     = 'Add gem summary here'
   s.description = 'Add (optional) gem description here'
   s.required_ruby_version = '>= 1.8.7'
