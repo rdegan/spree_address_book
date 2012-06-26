@@ -13,13 +13,11 @@ CheckoutController.class_eval do
 
   def update_user_address
     unless params[:remember_bill_address].blank?
-      current_user.bill_address.delete unless current_user.bill_address.blank?
-      current_user.bill_address = @order.bill_address.clone
+      current_user.bill_address = @order.bill_address
     end
 
     unless params[:remember_ship_address].blank?
-          current_user.ship_address.delete unless current_user.ship_address.blank?
-          current_user.ship_address = @order.ship_address.clone
+          current_user.ship_address = @order.ship_address
     end
     current_user.save
 
