@@ -1,6 +1,6 @@
-<%= javascript_include_tag '/states' %>
-<% @user.bill_address ||= Address.default unless @user.blank? %>
-<% @user.ship_address ||= Address.default unless @user.blank? %>
+<% content_for :head do %>
+    <%= javascript_include_tag states_url(:format => :js) %>
+<% end %>
 
 <p>
   <%= f.label :email, t(:email) %><br />

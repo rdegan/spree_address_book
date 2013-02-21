@@ -1,4 +1,4 @@
-CheckoutController.class_eval do
+Spree::CheckoutController.class_eval do
   after_filter :update_user_address, :only => :update
 
   def before_address
