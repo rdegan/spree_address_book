@@ -37,6 +37,14 @@
         <%= bill_form.label :lastname, t(:last_name) %><span class="req">*</span><br />
         <%= bill_form.text_field :lastname, :class => 'required' %>
       </p>
+	  <p class="field" id="bvat_number">
+        <%= bill_form.label :vat_number, t(:vat_number) %><br />
+        <%= bill_form.text_field :vat_number %>
+      </p>
+	  <p class="field" id="btax_id_number">
+        <%= bill_form.label :tax_id_number, t(:tax_id_number) %><br />
+        <%= bill_form.text_field :tax_id_number %>
+      </p>
       <p class="field" id="baddress1">
         <%= bill_form.label :address1, t(:street_address) %><span class="req">*</span><br />
         <%= bill_form.text_field :address1, :class => 'required' %>
@@ -114,6 +122,14 @@
       <p class="field" id="slastname">
         <%= ship_form.label :lastname, t(:last_name) %><span class="req">*</span><br />
         <%= ship_form.text_field :lastname, :class => 'required' %>
+      </p>
+	  <p class="field" id="svat_number">
+        <%= ship_form.label :vat_number, t(:vat_number) %><br />
+        <%= ship_form.text_field :vat_number %>
+      </p>
+	  <p class="field" id="stax_id_number">
+        <%= ship_form.label :tax_id_number, t(:tax_id_number) %><br />
+        <%= ship_form.text_field :tax_id_number %>
       </p>
       <p class="field" id="saddress1">
         <%= ship_form.label :address1, t(:street_address) %><span class="req">*</span><br />

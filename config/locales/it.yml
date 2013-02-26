@@ -3,3 +3,36 @@ it:
   add_bill_address: Aggiungi indirizzo di fatturazione
   remember_ship_address: Salva l'indirizzo di consegna
   remember_bill_address: Salva l'indirizzo di fatturazione
+  tax_id_number: "Codice Fiscale"
+  vat_number: "P. IVA"
+  activerecord:
+      attributes:
+        spree/address:
+          tax_id_number: "Codice Fiscale"
+          vat_number: "P. IVA"
+        spree/order/bill_address:
+          tax_id_number: "Codice Fiscale"
+          vat_number: "P. IVA"
+        spree/order/ship_address:
+          tax_id_number: "Codice Fiscale"
+          vat_number: "P. IVA"
+        spree/user/bill_address:
+          address1: "Indirizzo"
+          city: "Citta`"
+          firstname: "Nome"
+          lastname: "Cognome"
+          phone: "Telefono"
+          state: "Stato/Provincia"
+          zipcode: "CAP"
+          tax_id_number: "Codice Fiscale"
+          vat_number: "P. IVA"
+        spree/user/ship_address:
+          address1: "Indirizzo"
+          city: "Citta`"
+          firstname: "Nome"
+          lastname: "Cognome"
+          phone: "Telefono"
+          state: "Stato/Provincia"
+          zipcode: "CAP"
+          tax_id_number: "Codice Fiscale"
+          vat_number: "P. IVA"
