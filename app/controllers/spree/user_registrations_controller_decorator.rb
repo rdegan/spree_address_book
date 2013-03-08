@@ -9,8 +9,8 @@ Spree::UserRegistrationsController.class_eval do
   end
   
   def create
-     params[:user].delete(:bill_address_attributes) if params[:user][:bill_address_attributes].blank? || empty_address?(params[:user][:bill_address_attributes])
-     params[:user].delete(:ship_address_attributes) if params[:user][:ship_address_attributes].blank? || empty_address?(params[:user][:ship_address_attributes])
+     params[:user].delete(:bill_address) if params[:user][:bill_address].blank? || empty_address?(params[:user][:bill_address])
+     params[:user].delete(:ship_address) if params[:user][:ship_address].blank? || empty_address?(params[:user][:ship_address])
     super
   end
 end
