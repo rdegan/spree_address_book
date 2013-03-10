@@ -40,7 +40,7 @@ var add_ship_address = 'Aggiungi indirizzo di consegna';
 
 
         // need for populate state select
-        if ($('#user_new').is('*') || $('.edit_user').is('*')) {
+        if ($('#new-customer').is('*') || $('.edit_user').is('*')) {
 
 
             var get_states = function (region) {

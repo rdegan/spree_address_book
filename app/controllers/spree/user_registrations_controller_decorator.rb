@@ -3,14 +3,15 @@ Spree::UserRegistrationsController.class_eval do
   
   def new
     resource = build_resource({})
-    @user.bill_address ||= Spree::Address.default
-    @user.ship_address ||= Spree::Address.default
-    respond_with resource
+    country = Spree::Country.find(Spree::Config[:default_country_id]) rescue Spree::Country.first
+    @user.build_bill_address({:country => country}, :without_protection => true) if !@user.bill_address
+    @user.build_ship_address({:country => country}, :without_protection => true) if !@user.ship_address
+    respond_with @user
   end
   
   def create
-     params[:user].delete(:bill_address) if params[:user][:bill_address].blank? || empty_address?(params[:user][:bill_address])
-     params[:user].delete(:ship_address) if params[:user][:ship_address].blank? || empty_address?(params[:user][:ship_address])
-    super
+     params[:user].delete(:bill_address_attributes) if params[:user][:bill_address_attributes].blank? || empty_address?(params[:user][:bill_address_attributes])
+     params[:user].delete(:ship_address_attributes) if params[:user][:ship_address_attributes].blank? || empty_address?(params[:user][:ship_address_attributes])
+     super
   end
 end

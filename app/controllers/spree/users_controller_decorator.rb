@@ -2,8 +2,9 @@ Spree::UsersController.class_eval do
   include Spree::AddressHelper
   
   def edit
-    @user.bill_address ||= Spree::Address.default
-    @user.ship_address ||= Spree::Address.default
+    country = Spree::Country.find(Spree::Config[:default_country_id]) rescue Spree::Country.first
+    @user.build_bill_address({:country => country}, :without_protection => true) if !@user.bill_address
+    @user.build_ship_address({:country => country}, :without_protection => true) if !@user.ship_address
   end
   
   def update
