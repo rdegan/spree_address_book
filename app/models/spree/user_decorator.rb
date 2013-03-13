@@ -1,21 +1,21 @@
-Spree::User.class_eval do
+Spree.user_class.class_eval do
   attr_accessible :use_billing, :bill_address_attributes, :ship_address_attributes, :ship_address, :bill_address
   accepts_nested_attributes_for :bill_address, :allow_destroy => true
   accepts_nested_attributes_for :ship_address, :allow_destroy => true
-  
+
   before_validation :clone_billing_address, :if => :use_billing?
-  attr_accessor :use_billing
-  
+  after_update :removed_bill_address, :if => :delete_billing?
+  after_update :removed_ship_address, :if => :delete_shipping?
+  attr_accessor :use_billing, :delete_ship_address, :delete_bill_address
+
   def update_with_password(params = {})
-    params[:user].delete(:password) if params[:user][:password].blank?
-    params[:user].delete(:password_confirmation) if params[:user][:password_confirmation].blank?
-    params[:user].delete(:bill_address_attributes) if empty_address?(params[:user][:bill_address_attributes]) || params[:delete_bill_address] == 'ture'
-    params[:user].delete(:ship_address_attributes) if empty_address?(params[:user][:ship_address_attributes]) || params[:delete_ship_address] == 'ture'
-    update_attributes(params[:user])
-    self.ship_address.destroy if params[:delete_ship_address] == 'true' && !self.ship_address.nil?
-    self.bill_address.destroy if params[:delete_bill_address] == 'true' && !self.bill_address.nil?
+    params.delete(:password) if params[:password].blank?
+    params.delete(:password_confirmation) if params[:password_confirmation].blank?
+    params.delete(:bill_address_attributes) if empty_address?(params[:bill_address_attributes])
+    params.delete(:ship_address_attributes) if empty_address?(params[:ship_address_attributes])
+    update_attributes(params)
   end
-  
+
   def clone_billing_address
     if bill_address and self.ship_address.nil?
       self.ship_address = bill_address.clone
@@ -25,10 +25,30 @@ Spree::User.class_eval do
     true
   end
 
+  def removed_ship_address
+    if self.ship_address
+      self.ship_address.destroy
+    end
+  end
+
+  def removed_bill_address
+    if self.bill_address
+      self.bill_address.destroy
+    end      
+  end
+
   def use_billing?
     @use_billing == true || @use_billing == "true" || @use_billing == "1"
   end
-  
+
+  def delete_billing?
+    @delete_bill_address == true || @delete_bill_address == "true" || @delete_bill_address == "1"
+  end
+
+  def delete_shipping?
+    @delete_ship_address == true || @delete_ship_address == "true" || @delete_ship_address == "1"
+  end
+
   private
   def empty_address?(address)
     count = 0

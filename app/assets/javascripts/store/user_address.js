@@ -7,13 +7,11 @@ var add_ship_address = 'Aggiungi indirizzo di consegna';
 (function ($) {
 
     $(document).ready(function () {
-
-        $('#new-customer #shipping .inner').css('display','initial');
-        $('.edit-user #shipping .inner').css('display','initial');
+        //$('#new-customer #shipping .inner').css('display','initial');
+        //$('.edit-user #shipping .inner').css('display','initial');
         // TODO make multilanguage
         $('#add_ship_address').click(function () {
             $('#shipping').toggle();
-
             if ($('#shipping').css('display') == 'none') {
                 $('#add_ship_address').html(add_ship_address);
                 $('#delete_ship_address').val('true');
@@ -36,15 +34,10 @@ var add_ship_address = 'Aggiungi indirizzo di consegna';
             return false;
         });
 
-
-
-
         // need for populate state select
-        if ($('#user_new').is('*') || $('.edit_user').is('*')) {
-
-
+        if ($('#new-customer').is('*') || $('.edit_user').is('*')) {
             var get_states = function (region) {
-                country = $('p#' + region + 'country' + ' span#' + region + 'country :only-child').val();
+                country = $('p#' + region + 'country' + ' span#' + region + 'country-selection :only-child').val();
                 return state_mapper[country];
             }
 
