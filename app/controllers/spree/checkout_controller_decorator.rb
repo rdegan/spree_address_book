@@ -19,15 +19,16 @@ Spree::CheckoutController.class_eval do
   end
   
   def update_user_address
-    unless params[:remember_bill_address].blank?
-      current_user.bill_address = @order.bill_address
-    end
+    if spree_current_user
+      unless params[:remember_bill_address].blank?
+        current_user.bill_address = @order.bill_address
+      end
 
-    unless params[:remember_ship_address].blank?
-          current_user.ship_address = @order.ship_address
+      unless params[:remember_ship_address].blank?
+            current_user.ship_address = @order.ship_address
+      end
+      spree_current_user.save
     end
-    current_user.save
-
   end
 
 end
