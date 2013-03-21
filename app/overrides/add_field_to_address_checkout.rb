@@ -1,9 +1,14 @@
-Deface::Override.new(:virtual_path => "spree/checkout/_address",
-                     :name => "append_field_bill_address_checkout",
-                     :insert_after => "[id='blastname']",
-                     :partial => "spree/shared/bill_address_field_company")
+Deface::Override.new(:virtual_path => "spree/shared/_user_form",
+                     :name => "add_address_user",
+                     :insert_after => "[data-hook='signup_below_password_fields']",
+                     :partial => "spree/shared/address_user_form")
 
-Deface::Override.new(:virtual_path => "spree/checkout/_address",
-                     :name => "append_field_ship_address_checkout",
-                     :insert_after => "[id='slastname']",
-                     :partial => "spree/shared/ship_address_field_company")
+Deface::Override.new(:virtual_path => "spree/address/_form",
+                     :name => "append_fields_address_checkout",
+                     :insert_after => "[id='bcompany']",
+                     :partial => "spree/shared/tax_id_and_vat_number_form")
+
+Deface::Override.new(:virtual_path => "spree/address/_form",
+                     :name => "append_fields_address_checkout",
+                     :insert_after => "[id='blastname']",
+                     :partial => "spree/shared/tax_id_and_vat_number_form")

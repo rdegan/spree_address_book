@@ -1,0 +1,33 @@
+<div class="create-address">
+	<p>
+		Puoi salvare i tuoi indirizzi in fase di registrazione, in modo tale da non doverli inserire ad ogni acquisto. <br/>
+		Potrai modificarli o aggiungerli dal tuo profilo! <br/>
+	</p>
+	<br/>
+	<%= button_tag(t(:add_bill_address), :id => :add_bill_address, :type => "button", :class => "button") %>
+	<%= button_tag(t(:add_ship_address), :id => :add_ship_address, :type => "button", :class => "button") %>
+</div>
+
+<div class="clearer">
+	<%= hidden_field_tag(:delete_bill_address,  'false') %>
+	<%= hidden_field_tag(:delete_ship_address,  'false') %>
+
+	<fieldset id="billing" data-hook>
+		<%= f.fields_for :bill_address do |bill_form| %>
+	      <legend><%= t(:billing_address) %></legend>
+	      <%= render :partial => 'spree/address/form_user', :locals => {:form => bill_form, :address_type => 'billing', :address => @user.bill_address} %>
+	    <% end %>
+	</fieldset>
+
+	<fieldset id="shipping" data-hook>
+		<%= f.fields_for :ship_address do |ship_form| %>
+	      <legend><%= t(:shipping_address) %></legend>
+	      <%= render :partial => 'spree/address/form_user', :locals => {:form => ship_form, :address_type => 'shipping', :address => @user.ship_address} %>
+	    <% end %>
+	</fieldset>
+</div>
+
+<% content_for :head do %>
+  <%= javascript_include_tag states_url(:format => :js) %>
+  <%= javascript_include_tag countries_url(:format => :js) %>
+<% end %>
