@@ -1,5 +1,9 @@
 Spree::User.class_eval do
-  attr_accessible :use_billing, :bill_address_attributes, :ship_address_attributes, :ship_address, :bill_address
+  attr_accessible :use_billing, :bill_address_attributes, :ship_address_attributes,
+                  :ship_address, :bill_address, :privacy
+  
+  attr_accessor :use_billing, :delete_ship_address, :delete_bill_address
+  
   accepts_nested_attributes_for :bill_address, :allow_destroy => true
   accepts_nested_attributes_for :ship_address, :allow_destroy => true
   
@@ -7,7 +11,8 @@ Spree::User.class_eval do
   
   after_update :removed_bill_address, :if => :delete_bill?
   after_update :removed_ship_address, :if => :delete_ship?
-  attr_accessor :use_billing, :delete_ship_address, :delete_bill_address
+  
+  validates_acceptance_of :privacy, :allow_nil => false, :accept => true, :if => :privacy_required?
   
   def update_with_password(params = {})
     params.delete(:password) if params[:password].blank?
@@ -15,6 +20,13 @@ Spree::User.class_eval do
     params.delete(:bill_address_attributes) if empty_address?(params[:bill_address_attributes])
     params.delete(:ship_address_attributes) if empty_address?(params[:ship_address_attributes])
     update_attributes(params)
+  end
+  
+  def privacy_required?
+    if self.new_record?
+      user_authentications.where(:provider => 'facebook').blank? &&
+      reset_password_sent_at.blank?
+    end
   end
   
   def clone_billing_address
