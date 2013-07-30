@@ -4,7 +4,7 @@ module SpreeAddressBook
 
       def add_javascripts
         append_file "app/assets/javascripts/store/all.js", "//= require store/spree_address_book\n"
-        #append_file "app/assets/javascripts/admin/all.js", "//= require admin/spree_address_book\n"
+        append_file "app/assets/javascripts/admin/all.js", "//= require admin/spree_address_book\n"
       end
 
       def add_stylesheets

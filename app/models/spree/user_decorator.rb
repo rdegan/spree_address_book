@@ -1,13 +1,11 @@
 Spree::User.class_eval do
-  attr_accessible :use_billing, :bill_address_attributes, :ship_address_attributes,
-                  :ship_address, :bill_address, :privacy
+  attr_accessible :bill_address_attributes, :ship_address_attributes,
+                  :ship_address, :bill_address, :privacy, :save_ship, :save_bill
   
-  attr_accessor :use_billing, :delete_ship_address, :delete_bill_address
+  attr_accessor :save_ship, :save_bill, :delete_ship_address, :delete_bill_address
   
   accepts_nested_attributes_for :bill_address, :allow_destroy => true
   accepts_nested_attributes_for :ship_address, :allow_destroy => true
-  
-  before_validation :clone_billing_address, :if => :use_billing?
   
   after_update :removed_bill_address, :if => :delete_bill?
   after_update :removed_ship_address, :if => :delete_ship?
@@ -17,8 +15,10 @@ Spree::User.class_eval do
   def update_with_password(params = {})
     params.delete(:password) if params[:password].blank?
     params.delete(:password_confirmation) if params[:password_confirmation].blank?
-    params.delete(:bill_address_attributes) if empty_address?(params[:bill_address_attributes])
-    params.delete(:ship_address_attributes) if empty_address?(params[:ship_address_attributes])
+    if params[:bill_address_attributes] || params[:ship_address_attributes]
+      params.delete(:bill_address_attributes) if empty_address?(params[:bill_address_attributes])
+      params.delete(:ship_address_attributes) if empty_address?(params[:ship_address_attributes])
+    end
     update_attributes(params)
   end
   
@@ -27,15 +27,6 @@ Spree::User.class_eval do
       user_authentications.where(:provider => 'facebook').blank? &&
       reset_password_sent_at.blank?
     end
-  end
-  
-  def clone_billing_address
-    if bill_address and self.ship_address.nil?
-      self.ship_address = bill_address.clone
-    else
-      self.ship_address.attributes = bill_address.attributes.except('id', 'updated_at', 'created_at')
-    end
-    true
   end
   
   def removed_ship_address
@@ -48,10 +39,6 @@ Spree::User.class_eval do
     if self.bill_address
       self.bill_address.destroy
     end      
-  end
-
-  def use_billing?
-    @use_billing == true || @use_billing == "true" || @use_billing == "1"
   end
   
   def delete_bill?
