@@ -6,33 +6,39 @@ it:
   tax_id_number: "Codice Fiscale"
   vat_number: "P. IVA"
   activerecord:
-      attributes:
-        spree/address:
-          tax_id_number: "Codice Fiscale"
-          vat_number: "P. IVA"
-        spree/order/bill_address:
-          tax_id_number: "Codice Fiscale"
-          vat_number: "P. IVA"
-        spree/order/ship_address:
-          tax_id_number: "Codice Fiscale"
-          vat_number: "P. IVA"
-        spree/user/bill_address:
-          address1: "Indirizzo"
-          city: "Citta`"
-          firstname: "Nome"
-          lastname: "Cognome"
-          phone: "Telefono"
-          state: "Stato/Provincia"
-          zipcode: "CAP"
-          tax_id_number: "Codice Fiscale"
-          vat_number: "P. IVA"
-        spree/user/ship_address:
-          address1: "Indirizzo"
-          city: "Citta`"
-          firstname: "Nome"
-          lastname: "Cognome"
-          phone: "Telefono"
-          state: "Stato/Provincia"
-          zipcode: "CAP"
-          tax_id_number: "Codice Fiscale"
-          vat_number: "P. IVA"
+    errors:
+      models:
+        spree/order:
+          attributes:
+            base:
+              no_valid_bill_address: "Indirizzo di Fatturazione errato. P.IVA o Cod. Fiscale errati."
+    attributes:
+      spree/address:
+        tax_id_number: "Codice Fiscale"
+        vat_number: "P. IVA"
+      spree/order/bill_address:
+        tax_id_number: "Codice Fiscale"
+        vat_number: "P. IVA"
+      spree/order/ship_address:
+        tax_id_number: "Codice Fiscale"
+        vat_number: "P. IVA"
+      spree/user/bill_address:
+        address1: "Indirizzo"
+        city: "Citta`"
+        firstname: "Nome"
+        lastname: "Cognome"
+        phone: "Telefono"
+        state: "Stato/Provincia"
+        zipcode: "CAP"
+        tax_id_number: "Codice Fiscale"
+        vat_number: "P. IVA"
+      spree/user/ship_address:
+        address1: "Indirizzo"
+        city: "Citta`"
+        firstname: "Nome"
+        lastname: "Cognome"
+        phone: "Telefono"
+        state: "Stato/Provincia"
+        zipcode: "CAP"
+        tax_id_number: "Codice Fiscale"
+        vat_number: "P. IVA"

@@ -2,7 +2,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_address_book'
-  s.version     = '1.1.0'
+  s.version     = '1.1.1'
   s.summary     = 'Manage address for User'
   s.required_ruby_version = '>= 1.8.7'
 
