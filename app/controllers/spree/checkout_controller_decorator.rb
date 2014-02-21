@@ -10,8 +10,8 @@ Spree::CheckoutController.class_eval do
   
   def before_address
     if current_user
-      @order.bill_address ||= current_user.bill_address || Spree::Address.default
-      @order.ship_address ||= current_user.ship_address || Spree::Address.default
+      @order.bill_address ||= (!current_user.bill_address.blank? && current_user.bill_address.valid?) ? current_user.bill_address : Spree::Address.default
+      @order.ship_address ||= (!current_user.ship_address.blank? && current_user.ship_address.valid?) ? current_user.ship_address : Spree::Address.default
     else
       @order.bill_address ||= Spree::Address.default
       @order.ship_address ||= Spree::Address.default

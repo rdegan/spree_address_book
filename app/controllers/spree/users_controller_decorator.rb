@@ -1,6 +1,4 @@
-Spree::UsersController.class_eval do
-  include Spree::AddressHelper
-  
+Spree::UsersController.class_eval do  
   def edit
     country = Spree::Country.find(Spree::Config[:default_country_id]) rescue Spree::Country.first
     @user.build_bill_address({:country => country}, :without_protection => true) if !@user.bill_address

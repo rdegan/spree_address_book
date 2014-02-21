@@ -1,3 +1,1 @@
-//= require store/user_address
-
-
+//= require store/checkout
